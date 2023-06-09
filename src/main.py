@@ -1,34 +1,34 @@
 import cv2
 import numpy as np
-import serial
+#import serial
 import sys
 import glob
 
 safeZ = 10
 drawZ = 7
 
-def scanPorts():
-    if sys.platform.startswith('win'):
-        ports = ['COM%s' % (i + 1) for i in range(256)]
-    elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-        # this excludes your current terminal "/dev/tty"
-        ports = glob.glob('/dev/tty[A-Za-z]*')
-    elif sys.platform.startswith('darwin'):
-        ports = glob.glob('/dev/tty.usb*')
-    else:
-        print("unknown os")
+# def scanPorts():
+#     if sys.platform.startswith('win'):
+#         ports = ['COM%s' % (i + 1) for i in range(256)]
+#     elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+#         # this excludes your current terminal "/dev/tty"
+#         ports = glob.glob('/dev/tty[A-Za-z]*')
+#     elif sys.platform.startswith('darwin'):
+#         ports = glob.glob('/dev/tty.usb*')
+#     else:
+#         print("unknown os")
 
-    valid_ports = []
+#     valid_ports = []
 
-    for port in ports:
-        try:
-            s = serial.Serial(port)
-            s.close()
-            valid_ports.append(port)
-        except (OSError, serial.SerialException):
-            pass
+#     for port in ports:
+#         try:
+#             s = serial.Serial(port)
+#             s.close()
+#             valid_ports.append(port)
+#         except (OSError, serial.SerialException):
+#             pass
 
-    return valid_ports
+#     return valid_ports
 
 
 # # Function to convert lines to array format
@@ -40,8 +40,8 @@ def scanPorts():
 #     return lines_array
 
 cap = cv2.VideoCapture(0)
-ports = scanPorts()
-ser = serial.Serial(ports[0], 115200, timeout=1)
+# ports = scanPorts()
+# ser = serial.Serial(ports[0], 115200, timeout=1)
 
 while True:
     # Capture an image from the camera
@@ -98,12 +98,12 @@ while True:
         # now, draw that shit
 
         f = open('draw.gcode', 'r')
-        commands = f.readlines()
-        for command in commands:
-            encoded = command.encode('utf-8')
-            ser.write(encoded + b'\n')
-            resp = ser.readline().decode('utf-8')
-            print(str(resp))
+        # commands = f.readlines()
+        # for command in commands:
+        #     encoded = command.encode('utf-8')
+        #     ser.write(encoded + b'\n')
+        #     resp = ser.readline().decode('utf-8')
+        #     print(str(resp))
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
