@@ -5,6 +5,7 @@ import sys
 import glob
 import time
 import keyboard
+import screeninfo
 
 safeZ = 10
 drawZ = 7
@@ -49,6 +50,10 @@ cap = cv2.VideoCapture(0)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 kernel = np.ones((3,3),np.uint8)
 
+# get the size of the screen
+screen = screeninfo.get_monitors()[0]
+screen_width, screen_height = screen.width, screen.height
+
 while True:
     
     # Capture an image from the camera
@@ -67,8 +72,8 @@ while True:
     height = 0
     width = 0
 
-    y_pos_buffer = 50
-    y_neg_buffer = 150
+    y_pos_buffer = 15
+    y_neg_buffer = 45
 
     if len(faces_rect) > 0:
         # set bounds variables
@@ -111,11 +116,12 @@ while True:
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (7, 7), 0)
     th3 = cv2.adaptiveThreshold(blur,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY_INV,21,5)
-    # opening = cv2.morphologyEx(th3, cv2.MORPH_OPEN, kernel)
-    # edges = cv2.Canny(th3, 10, 70, apertureSize=3, L2gradient = True)
-    cv2.imshow("thresh", th3)
-    #cv2.imshow("opening", opening)
-    #cv2.imshow("canny",edges)
+
+    window_name = 'live'
+    cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
+    cv2.moveWindow(window_name, screen.x - 1, screen.y + 5)
+    cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    cv2.imshow(window_name, th3)
 
     # trigger when we press "d"
     if cv2.waitKey(1) == 100:
@@ -124,11 +130,7 @@ while True:
 
         # print "Drawing" on the image
         thickness = 2
-        drawing = th3.copy()
-        drawing = cv2.rectangle(drawing, (38, 0), (460, 70), (255), -1)
-        drawing = cv2.putText(drawing, 'Drawing Now', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0), thickness, cv2.LINE_AA)
-        # cv2.startWindowThread()
-        # cv2.namedWindow("Drawing Now", cv2.WINDOW_AUTOSIZE)
+        drawing = cv2.imread("drawing.png")
         cv2.imshow("Drawing Now", drawing)
         time.sleep(0.2)
         cv2.waitKey(1)
@@ -219,3 +221,7 @@ while True:
 
         
         cv2.destroyAllWindows()
+
+    if cv2.waitKey(1) == 101:
+        cv2.destroyAllWindows()
+        break
