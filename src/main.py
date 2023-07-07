@@ -204,7 +204,7 @@ while True:
             print("done writing gcode to file")
 
 #   DRAW IMAGE
-        if(False):
+        if(True):
             ser.open()
             f = open('draw.gcode', 'r')
             commands = f.readlines()
