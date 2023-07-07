@@ -208,7 +208,6 @@ while True:
             # add any starting gcode
             f.write("G28\n")
             f.write("G0 F7000\n")
-            f.write("G0 Z31.5\n")
 
             for line in line_list:
                 # move head up before going to the correct starting location
@@ -235,8 +234,7 @@ while True:
             ser.close()
 
             print("done writing gcode to file")
-
-        time.sleep(1)
+            
 #   DRAW
         if(True):
             ser.open()
