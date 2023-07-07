@@ -8,7 +8,7 @@ import keyboard
 import screeninfo
 
 safeZ = 23
-drawZ = 9
+drawZ = 7
 
 cap = cv2.VideoCapture(0)
 
@@ -207,7 +207,7 @@ while True:
                     if firstPoint:
                         firstPoint = False
                     else:
-                        f.write("G0 X" + str((scale*point[0])+x_transform) + " Y" + str((scale*(height - point[1])) + y_transform) + "\n")
+                        f.write("G0 X" + str((scale*point[0])+x_transform + x_transform_center) + " Y" + str((scale*(height - point[1])) + y_transform + y_transform_center) + "\n")
             
             # Write ending Gcode
             f.write("G0 Z31.5\n")
