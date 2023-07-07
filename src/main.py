@@ -181,7 +181,7 @@ while True:
             print("opening file and generating gcode")
 
             # transform variables for setting bottom left position of paper
-            x_transform = 200
+            x_transform = 300
             y_transform = 200
 
             paper_width = 100
@@ -207,7 +207,7 @@ while True:
 
             # add any starting gcode
             f.write("G28\n")
-            f.write("G0 F1500\n")
+            f.write("G0 F5000\n")
 
             for line in line_list:
                 # move head up before going to the correct starting location
