@@ -7,8 +7,8 @@ import time
 import keyboard
 import screeninfo
 
-safeZ = 31.5
-drawZ = 28
+safeZ = 20
+drawZ = 10
 
 # def scanPorts():
 #     if sys.platform.startswith('win'):
