@@ -7,40 +7,8 @@ import time
 import keyboard
 import screeninfo
 
-safeZ = 20
+safeZ = 23
 drawZ = 9
-
-# def scanPorts():
-#     if sys.platform.startswith('win'):
-#         ports = ['COM%s' % (i + 1) for i in range(256)]
-#     elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-#         # this excludes your current terminal "/dev/tty"
-#         ports = glob.glob('/dev/tty[A-Za-z]*')
-#     elif sys.platform.startswith('darwin'):
-#         ports = glob.glob('/dev/tty.usb*')
-#     else:
-#         print("unknown os")
-
-#     valid_ports = []
-
-#     for port in ports:
-#         try:
-#             s = serial.Serial(port)
-#             s.close()
-#             valid_ports.append(port)
-#         except (OSError, serial.SerialException):
-#             pass
-
-#     return valid_ports
-
-
-# # Function to convert lines to array format
-# def lines_to_array(lines):
-#     lines_array = []
-#     for line in lines:
-#         x1, y1, x2, y2 = line[0]
-#         lines_array.append([(x1, y1), (x2, y2)])
-#     return lines_array
 
 cap = cv2.VideoCapture(0)
 
@@ -213,9 +181,6 @@ while True:
                 # move head up before going to the correct starting location
                 f.write("G0 Z" + str(safeZ) + "\n")
 
-                # print("original x: " + str(line[0][0]))
-                # print("new X: " + str((scale*line[0][0])+x_transform))
-
                 # go to first position
                 f.write("G0 X" + str((scale*line[0][0])+x_transform) + " Y" + str((scale*(height - line[0][1])) + y_transform) + "\n")
 
@@ -223,8 +188,12 @@ while True:
                 f.write("G0 Z" + str(drawZ) + "\n")
 
                 # do all the rest of the path commands
+                firstPoint = True
                 for point in line:
-                    f.write("G0 X" + str((scale*point[0])+x_transform) + " Y" + str((scale*(height - point[1])) + y_transform) + "\n")
+                    if firstPoint:
+                        firstPoint = False
+                    else:
+                        f.write("G0 X" + str((scale*point[0])+x_transform) + " Y" + str((scale*(height - point[1])) + y_transform) + "\n")
             
             # Write ending Gcode
             f.write("G0 Z31.5\n")
@@ -244,14 +213,8 @@ while True:
                 encoded = command.encode('utf-8')
                 ser.write(encoded + b'\n')
                 resp = ser.readline().decode('ISO-8859-1')
-                
-                # try:
-                #     resp = ser.readline().decode('utf-8')
-                # except UnicodeDecodeError:
-                #     resp = ser.readline().decode('utf-8')
                 print(str(resp))
 
-        
         cv2.destroyAllWindows()
 
     if cv2.waitKey(1) == 101:
