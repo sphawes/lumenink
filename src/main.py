@@ -197,15 +197,14 @@ while True:
             
             # Write ending Gcode
             f.write("G0 Z31.5\n")
-            f.write("G0 X450 Y400\n")
             
             f.close()
             ser.close()
 
             print("done writing gcode to file")
 
-#   DRAW
-        if(True):
+#   DRAW IMAGE
+        if(False):
             ser.open()
             f = open('draw.gcode', 'r')
             commands = f.readlines()
@@ -214,6 +213,18 @@ while True:
                 ser.write(encoded + b'\n')
                 resp = ser.readline().decode('ISO-8859-1')
                 print(str(resp))
+
+#   DRAW LOGO
+        if(True):
+            ser.open()
+            f = open('opulo.gcode', 'r')
+            commands = f.readlines()
+            for command in commands:
+                encoded = command.encode('utf-8')
+                ser.write(encoded + b'\n')
+                resp = ser.readline().decode('ISO-8859-1')
+                print(str(resp))
+
 
         cv2.destroyAllWindows()
 
