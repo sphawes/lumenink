@@ -199,7 +199,6 @@ while True:
             f.write("G0 Z31.5\n")
             
             f.close()
-            ser.close()
 
             print("done writing gcode to file")
 
@@ -213,6 +212,7 @@ while True:
                 ser.write(encoded + b'\n')
                 resp = ser.readline().decode('ISO-8859-1')
                 print(str(resp))
+            ser.close()
 
 #   DRAW LOGO
         if(True):
@@ -224,6 +224,7 @@ while True:
                 ser.write(encoded + b'\n')
                 resp = ser.readline().decode('ISO-8859-1')
                 print(str(resp))
+            ser.close()
 
 
         cv2.destroyAllWindows()
