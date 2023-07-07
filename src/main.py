@@ -8,7 +8,7 @@ import keyboard
 import screeninfo
 
 safeZ = 20
-drawZ = 7
+drawZ = 9
 
 # def scanPorts():
 #     if sys.platform.startswith('win'):
@@ -181,11 +181,11 @@ while True:
             print("opening file and generating gcode")
 
             # transform variables for setting bottom left position of paper
-            x_transform = 300
+            x_transform = 398
             y_transform = 200
 
             paper_width = 90
-            paper_height = 140
+            paper_height = 130
 
             # calculate scale required to fix in X
             x_scale = paper_width / width
