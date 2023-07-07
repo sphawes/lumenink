@@ -8,7 +8,7 @@ import keyboard
 import screeninfo
 
 safeZ = 20
-drawZ = 8
+drawZ = 7
 
 # def scanPorts():
 #     if sys.platform.startswith('win'):
@@ -184,8 +184,8 @@ while True:
             x_transform = 300
             y_transform = 200
 
-            paper_width = 100
-            paper_height = 150
+            paper_width = 90
+            paper_height = 140
 
             # calculate scale required to fix in X
             x_scale = paper_width / width
