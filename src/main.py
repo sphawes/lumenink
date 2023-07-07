@@ -8,7 +8,7 @@ import keyboard
 import screeninfo
 
 safeZ = 20
-drawZ = 10
+drawZ = 8
 
 # def scanPorts():
 #     if sys.platform.startswith('win'):
@@ -208,6 +208,7 @@ while True:
             # add any starting gcode
             f.write("G28\n")
             f.write("G0 F7000\n")
+            f.write("G0 Z31.5\n")
 
             for line in line_list:
                 # move head up before going to the correct starting location
@@ -228,7 +229,7 @@ while True:
             
             # Write ending Gcode
             f.write("G0 Z31.5\n")
-            f.write("G0 X450 Y400")
+            f.write("G0 X450 Y400\n")
             
             f.close()
             ser.close()
