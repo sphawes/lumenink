@@ -58,7 +58,7 @@ screen_width, screen_height = screen.width, screen.height
 ports = glob.glob('/dev/ttyACM*')
 for port in ports:
     try:
-        ser = serial.Serial(port, timeout=10)
+        ser = serial.Serial(port, timeout=100)
         ser.close()
         break
     except (OSError, serial.SerialException):
