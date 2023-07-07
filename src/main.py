@@ -129,9 +129,15 @@ while True:
         print("starting gcode generation and drawing sequence")
 
         # print "Drawing" on the image
-        thickness = 2
-        drawing = cv2.imread("drawing.png")
-        cv2.imshow("Drawing Now", drawing)
+        path = r'src/drawing.png'
+        drawing = cv2.imread(path)
+
+        window_name = 'Drawing Now'
+        cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
+        cv2.moveWindow(window_name, screen.x - 1, screen.y + 5)
+        cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+
+        cv2.imshow(window_name, drawing)
         time.sleep(0.2)
         cv2.waitKey(1)
         
@@ -210,7 +216,7 @@ while True:
 
         time.sleep(1)
 #   DRAW
-        if(False):
+        if(True):
             f = open('draw.gcode', 'r')
             commands = f.readlines()
             for command in commands:
