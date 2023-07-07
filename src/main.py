@@ -55,8 +55,7 @@ screen = screeninfo.get_monitors()[0]
 screen_width, screen_height = screen.width, screen.height
 
 # checks for valid serial ports and opens ser object to the first one found
-ser = None
-ports = glob.glob('/dev/tty[A-Za-z]*')
+ports = glob.glob('/dev/ttyACM*')
 for port in ports:
     try:
         ser = serial.Serial(port)
@@ -226,12 +225,14 @@ while True:
                 for point in line:
                     f.write("G0 X" + str((scale*point[0])+x_transform) + " Y" + str((scale*(height - point[1])) + y_transform) + "\n")
             f.close()
+            ser.close()
 
             print("done writing gcode to file")
 
         time.sleep(1)
 #   DRAW
         if(True):
+            ser.open()
             f = open('draw.gcode', 'r')
             commands = f.readlines()
             for command in commands:
