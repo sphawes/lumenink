@@ -153,7 +153,7 @@ while True:
             y_transform = 200
 
             paper_width = 90
-            paper_height = 130
+            paper_height = 125
 
             # calculate scale required to fix in X
             x_scale = paper_width / width
@@ -204,10 +204,16 @@ while True:
                 # do all the rest of the path commands
                 firstPoint = True
                 for point in line:
+                    # if it's the first point, skip and set the flag because we're already there
                     if firstPoint:
                         firstPoint = False
+
+                    # write all the rest of the points in the line object
                     else:
                         f.write("G0 X" + str((scale*point[0])+x_transform + x_transform_center) + " Y" + str((scale*(height - point[1])) + y_transform + y_transform_center) + "\n")
+
+                # finally, go back to the first position again to close the loop
+                f.write("G0 X" + str((scale*line[0][0])+x_transform + x_transform_center) + " Y" + str((scale*(height - line[0][1])) + y_transform + y_transform_center) + "\n")
             
             # Write ending Gcode
             f.write("G0 Z31.5\n")
