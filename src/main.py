@@ -7,8 +7,8 @@ import time
 import keyboard
 import screeninfo
 
-safeZ = 10
-drawZ = 7
+safeZ = 31.5
+drawZ = 28
 
 # def scanPorts():
 #     if sys.platform.startswith('win'):
@@ -58,7 +58,7 @@ screen_width, screen_height = screen.width, screen.height
 ports = glob.glob('/dev/ttyACM*')
 for port in ports:
     try:
-        ser = serial.Serial(port)
+        ser = serial.Serial(port, timeout=10)
         ser.close()
         break
     except (OSError, serial.SerialException):
@@ -182,7 +182,7 @@ while True:
 
             # transform variables for setting bottom left position of paper
             x_transform = 200
-            y_transform = 100
+            y_transform = 200
 
             paper_width = 100
             paper_height = 150
@@ -207,6 +207,7 @@ while True:
 
             # add any starting gcode
             f.write("G28\n")
+            f.write("G0 F1500\n")
 
             for line in line_list:
                 # move head up before going to the correct starting location
