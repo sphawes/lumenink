@@ -160,11 +160,25 @@ while True:
 
             # calculate scale required to fit in Y
             y_scale = paper_height / height
-            
-            scale = x_scale
 
+            scale = None
+            x_transform_center = 0
+            y_transform_center = 0
+            
+            # if image is taller than the paper's aspect ratio
             if y_scale < x_scale:
+                # we need an X offset to center, so find the width of the image after scaled at y scale
                 scale = y_scale
+                scaled_width = scale * width
+                x_transform_center = (paper_width - scaled_width) / 2
+
+
+            # if image is wider than the paper's aspect ratio
+            else:
+                # we need a Y offset to center, so find the height of the image after scaled at x scale
+                scale = x_scale
+                scaled_height = scale * height
+                y_transform_center = (paper_height - scaled_height) / 2
 
             #calculate transform variables
 
@@ -182,7 +196,7 @@ while True:
                 f.write("G0 Z" + str(safeZ) + "\n")
 
                 # go to first position
-                f.write("G0 X" + str((scale*line[0][0])+x_transform) + " Y" + str((scale*(height - line[0][1])) + y_transform) + "\n")
+                f.write("G0 X" + str((scale*line[0][0]) + x_transform + x_transform_center) + " Y" + str((scale*(height - line[0][1])) + y_transform + y_transform_center) + "\n")
 
                 # move down
                 f.write("G0 Z" + str(drawZ) + "\n")
