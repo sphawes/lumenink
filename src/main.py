@@ -207,7 +207,7 @@ while True:
 
             # add any starting gcode
             f.write("G28\n")
-            f.write("G0 F5000\n")
+            f.write("G0 F7000\n")
 
             for line in line_list:
                 # move head up before going to the correct starting location
@@ -225,6 +225,11 @@ while True:
                 # do all the rest of the path commands
                 for point in line:
                     f.write("G0 X" + str((scale*point[0])+x_transform) + " Y" + str((scale*(height - point[1])) + y_transform) + "\n")
+            
+            # Write ending Gcode
+            f.write("G0 Z31.5\n")
+            f.write("G0 X450 Y400")
+            
             f.close()
             ser.close()
 
