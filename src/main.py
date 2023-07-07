@@ -181,7 +181,7 @@ while True:
             print("opening file and generating gcode")
 
             # transform variables for setting bottom left position of paper
-            x_transform = 398
+            x_transform = 298
             y_transform = 200
 
             paper_width = 90
@@ -234,7 +234,7 @@ while True:
             ser.close()
 
             print("done writing gcode to file")
-            
+
 #   DRAW
         if(True):
             ser.open()
