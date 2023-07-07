@@ -245,7 +245,12 @@ while True:
             for command in commands:
                 encoded = command.encode('utf-8')
                 ser.write(encoded + b'\n')
-                resp = ser.readline().decode('utf-8')
+                resp = ser.readline().decode('ISO-8859-1')
+                
+                # try:
+                #     resp = ser.readline().decode('utf-8')
+                # except UnicodeDecodeError:
+                #     resp = ser.readline().decode('utf-8')
                 print(str(resp))
 
         
