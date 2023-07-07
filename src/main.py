@@ -214,6 +214,8 @@ while True:
 
                 # finally, go back to the first position again to close the loop
                 f.write("G0 X" + str((scale*line[0][0])+x_transform + x_transform_center) + " Y" + str((scale*(height - line[0][1])) + y_transform + y_transform_center) + "\n")
+
+                f.write("G0 Z" + str(safeZ) + "\n")
             
             # Write ending Gcode
             f.write("G0 Z31.5\n")
