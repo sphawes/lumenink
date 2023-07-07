@@ -189,7 +189,7 @@ while True:
 
             # add any starting gcode
             f.write("G28\n")
-            f.write("G0 F7000\n")
+            f.write("G0 F10000\n")
 
             for line in line_list:
                 # move head up before going to the correct starting location
