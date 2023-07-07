@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-#import serial
+import serial
 import sys
 import glob
 import time
@@ -53,6 +53,21 @@ kernel = np.ones((3,3),np.uint8)
 # get the size of the screen
 screen = screeninfo.get_monitors()[0]
 screen_width, screen_height = screen.width, screen.height
+
+# checks for valid serial ports and opens ser object to the first one found
+ser = None
+ports = glob.glob('/dev/tty[A-Za-z]*')
+for port in ports:
+    try:
+        ser = serial.Serial(port)
+        ser.close()
+        break
+    except (OSError, serial.SerialException):
+        pass
+
+if ser == None:
+    print("no valid serial port found")
+    sys.exit()
 
 while True:
     
