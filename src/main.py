@@ -5,6 +5,7 @@ import sys
 import glob
 import time
 import keyboard
+from datetime import datetime
 import screeninfo
 
 safeZ = 23
@@ -109,6 +110,15 @@ while True:
     if cv2.waitKey(1) == 100:
 
         print("starting gcode generation and drawing sequence")
+
+        # get timestamp
+        now = datetime.now()
+        timestamp = now.strftime("%Y%m%d-%H:%M:%S")
+
+        # Save original image
+        cv2.imwrite("archive/original/" + timestamp + ".png", image)
+        # Save processed image
+        cv2.imwrite("archive/processed/" + timestamp + ".png", th3)
 
         # print "Drawing" on the image
         path = r'src/drawing.png'
