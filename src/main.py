@@ -33,9 +33,9 @@ for port in ports:
     except (OSError, serial.SerialException):
         pass
 
-if ser == None:
-    print("no valid serial port found")
-    sys.exit()
+# if ser == None:
+#     print("no valid serial port found")
+#     sys.exit()
 
 while True:
     
@@ -98,12 +98,12 @@ while True:
     # now we have the image with appropriate AOI, now we can do line detection
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (7, 7), 0)
-    th3 = cv2.adaptiveThreshold(blur,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY_INV,21,5)
+    th3 = cv2.adaptiveThreshold(blur,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY_INV,21,3)
 
     window_name = 'live'
-    cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
-    cv2.moveWindow(window_name, screen.x - 1, screen.y + 5)
-    cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    # cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
+    # cv2.moveWindow(window_name, screen.x - 1, screen.y + 5)
+    # cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
     cv2.imshow(window_name, th3)
 
     # trigger when we press "d"
@@ -151,7 +151,7 @@ while True:
                 line.append(coordinate[0])
             line_list.append(line)
 
-        # print(line_list[0])
+
 
 #  GENERATE
         if(True):
